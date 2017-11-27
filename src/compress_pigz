@@ -1,0 +1,36 @@
+# requirement: pigz tool
+# apt-get install pigz
+# yum install pigz
+# pacman -Sy pigz
+
+# function that receive something to be compressed and where it will be saved without remove the source
+# parameters:
+# #1 : absolut path that will be compressed
+# #2 : absolut path that compressed file will be saved
+#
+# return:
+# return of pigz command (#?)
+
+# best compress with best performance as possible
+pigzBestModeOnlineCPU()
+{
+	whatwillbecompressed=$1
+	whereitwillbesaved=$2	
+	tar cf - $whatwillbecompressed | pigz --rsyncable --best ${whereitwillbesaved}/$(basename $whereitwillbesaved).tar.gz
+}
+
+# fast compress with low use of CPU
+pigzFastMode2threads()
+{
+	whatwillbecompressed=$1
+	whereitwillbesaved=$2	
+	tar cf - $whatwillbecompressed | pigz --rsyncable --best -p 2  ${whereitwillbesaved}/$(basename $whereitwillbesaved).tar.gz
+}
+
+# slow compress with low use of CPU
+pigzFastMode2threads()
+{
+	whatwillbecompressed=$1
+	whereitwillbesaved=$2	
+	tar cf - $whatwillbecompressed | pigz --rsyncable --fast -p 2 ${whereitwillbesaved}/$(basename $whereitwillbesaved).tar.gz
+}
