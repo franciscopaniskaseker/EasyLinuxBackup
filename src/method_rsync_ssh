@@ -1,0 +1,47 @@
+# requirement: rsync tool
+# apt-get install rsync
+# yum install rsync
+# pacman -Sy rsync
+
+# function that receive something to be transferred
+# parameters:
+# #1 : if (remotetolocal|localtoremote) rsync
+# #2 : if remote, ssh user
+# #3 : if remote, absolut path of ssh key
+# #4 : if remote, hostname/ip of source or destiny server
+# #5 : absolut path about what will be transfered
+# #6 : absolut path about remote location that will be saved
+# #7 : rsync parameters that will be used
+# #8 : file/dir that will be copied 
+#
+# return:
+# return of rsync command ($?)
+
+rsyncRemoteSSH()
+{
+	if [[ "$#" -ne 7 ]]
+	then
+		echo $log_error_rsyncRemoteSSH_numparameters
+		echo $log_error_rsyncRemoteSSH_numparameters | systemd-cat
+	fi 
+
+	rsync_option="$1"
+	rsync_user="$2"
+	rsync_sshkeypath="$3"
+	rsync_hostname="$4"
+	rsync_whatwillbetransfered="$5"
+	rsync_wherewillbesaved="$6"
+	rsync_parameters="$7"
+
+	if [[ "$rsync_option" == "localtoremote" ]]
+	then
+		rsync_command="rsync $rsync_parameters -e \"ssh -i $rsync_sshkeypath\" $rsync_whatwillbetransfered ${rsync_user}@${rsync_hostname}:${rsync_wherewillbesaved}"
+	else
+		rsync_command="rsync $rsync_parameters -e \"ssh -i $rsync_sshkeypath\" ${rsync_user}@${rsync_hostname}:${rsync_whatwillbetransfered} ${rsync_wherewillbesaved}"
+	fi
+
+	$rsync_command
+	$rsync_returncode = $?
+	echo $rsync_returncode
+}
+
