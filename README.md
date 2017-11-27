@@ -12,6 +12,12 @@ So yes, if you need a new strategy or mode of backup, I have to write this for y
 
 Bash script and only opensource software (that all repositories have). Seriously, I do not want to make your (and my) job more stress.
 
+# About coding
+
+If you love reuse of codes, functions as parameters, parameters as parameters etc this is not for you. I want to mantain every block clear and independent. I am not interested in coding with efficiency here. I want a lot of people helping here, ok?
+
+When I said about not be efficient, I am talking about I do not want write less code... all of backup strategies will be very efficient as possible.
+
 # Release notes
 
 in the future :)
