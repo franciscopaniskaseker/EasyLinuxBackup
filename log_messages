@@ -1,0 +1,2 @@
+log_prefix_tag="[EasyLinuxBackup"
+log_error_rsyncRemoteSSH_numparameters="${log_prefix_tag} Number of parameters of rsyncRemoteSSH function are wrong!"
