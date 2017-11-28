@@ -12,14 +12,15 @@
 # #5 : absolut path about what will be transfered
 # #6 : absolut path about remote location that will be saved
 # #7 : rsync parameters that will be used
-# #8 : file/dir that will be copied 
+# #8 : path on remote site that will be used to recicle strategy
+# #9 : file/dir that will be copied (only one)
 #
 # return:
 # return of rsync command ($?)
 
 rsyncRemoteSSH()
 {
-	if [[ "$#" -ne 7 ]]
+	if [[ "$#" -ne 9 ]]
 	then
 		echo $log_error_rsyncRemoteSSH_numparameters
 		echo $log_error_rsyncRemoteSSH_numparameters | systemd-cat
@@ -32,12 +33,13 @@ rsyncRemoteSSH()
 	rsync_whatwillbetransfered="$5"
 	rsync_wherewillbesaved="$6"
 	rsync_parameters="$7"
+	rsync_pathtorecicle="$8"
 
 	if [[ "$rsync_option" == "localtoremote" ]]
 	then
-		rsync_command="rsync $rsync_parameters -e \"ssh -i $rsync_sshkeypath\" $rsync_whatwillbetransfered ${rsync_user}@${rsync_hostname}:${rsync_wherewillbesaved}"
+		rsync_command="rsync $rsync_parameters -e \"ssh -i $rsync_sshkeypath\" $rsync_whatwillbetransfered ${rsync_user}@${rsync_hostname}:${rsync_wherewillbesaved}/${rsync_pathtorecicle}"
 	else
-		rsync_command="rsync $rsync_parameters -e \"ssh -i $rsync_sshkeypath\" ${rsync_user}@${rsync_hostname}:${rsync_whatwillbetransfered} ${rsync_wherewillbesaved}"
+		rsync_command="rsync $rsync_parameters -e \"ssh -i $rsync_sshkeypath\" ${rsync_user}@${rsync_hostname}:${rsync_whatwillbetransfered} ${rsync_wherewillbesaved}/${rsync_pathtorecicle}"
 	fi
 
 	$rsync_command
