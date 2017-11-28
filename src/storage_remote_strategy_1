@@ -1,0 +1,42 @@
+# Usually you need to recicle your backups to save space (money!) and save as many backups as possible.
+# The first strategy will be storage at least 30 days of backups without save a lot of files.
+# We will try to save space and try to reduce catastrophe impact.. so first strategy is:
+# (1) save every 00hs backup of first and fifth day of the month (2 backups)
+# (2) save every 00hs backup of week day, sunday to sunday (7 backups)
+# (3) save every hour backup of day, 1:00AM until 23:00PM (23 backups)
+# 
+# We will save backups in these directories:
+# (1) monthly_1 and monthly_15
+# (2) weekly_sunday, weekly_monday, ... and weekly_saturday
+# (3) hourly_1, hourly_2, ... and hourly_23
+#
+#
+# requirements:
+# - correct date (ntp server highly recommended)
+# - egrep installed
+#
+# parameters: n/a
+# return: path name
+
+
+storageRemoteStrategy1()
+{
+	storage_remote_strategy_1_path=""
+	hour=$(getCurrentHour)
+	weekday=$(getCurrentWeekDay)
+	monthday=$(getCurrentMonthDay)
+
+	if [[ "00" == "$hour" ]]
+	then
+		if echo $monthday | egrep -q "(01|15)"
+		then
+			storage_remote_strategy_1_path="monthly_${monthday}"
+		else
+			storage_remote_strategy_1_path="weekly_${weekday}"
+		fi
+	else
+		storage_remote_strategy_1_path="hourly_${weekday}"
+	fi
+
+	echo $storage_remote_strategy_1_path
+}
