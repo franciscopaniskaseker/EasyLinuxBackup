@@ -1,0 +1,35 @@
+# get current hour
+getCurrentHour()
+{
+	result=`date +%H`
+	result=$(getLowerCase $result)
+	echo $result
+}
+
+# get current week day
+getCurrentWeekDay()
+{
+	result=`date +%A`
+	result=$(getLowerCase $result)
+	echo $result
+}
+
+# get month day
+getCurrentMonthDay()
+{
+	result=`date +%e`
+	result=$(getLowerCase $result)
+	echo $result
+}
+
+# convert text to lowercase
+# paramters:
+# (1) string that will be converted to lowercase
+#
+# return: loweredcase
+getLowerCase()
+{
+	string=$1
+	string=${string,,}
+	echo $string
+}
