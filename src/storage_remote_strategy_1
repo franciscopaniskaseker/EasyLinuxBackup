@@ -35,7 +35,7 @@ storageRemoteStrategy1()
 			storage_remote_strategy_1_path="weekly_${weekday}"
 		fi
 	else
-		storage_remote_strategy_1_path="hourly_${weekday}"
+		storage_remote_strategy_1_path="hourly_${hour}"
 	fi
 
 	echo $storage_remote_strategy_1_path
